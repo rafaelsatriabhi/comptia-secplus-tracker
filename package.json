@@ -16,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/rafaelsatriabhi/comptia-secplus-tracker/issues"
   },
-  "homepage": "https://github.com/rafaelsatriabhi/comptia-secplus-tracker#readme",
-  "devDependencies": {
-    "eslint": "^10.12.0"
-  }
+  "homepage": "https://github.com/rafaelsatriabhi/comptia-secplus-tracker#readme"
 }
