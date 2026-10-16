@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/rafaelsatriabhi/comptia-secplus-tracker/issues"
   },
-  "homepage": "https://github.com/rafaelsatriabhi/comptia-secplus-tracker#readme"
+  "homepage": "https://github.com/rafaelsatriabhi/comptia-secplus-tracker#readme",
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
 }

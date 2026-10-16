@@ -95,7 +95,7 @@ async function fileToGenerativePart(file) {
     reader.onloadend = () => resolve(reader.result.split(',')[1]);
     reader.readAsDataURL(file);
   });
-  
+
   return {
     inlineData: {
       data: await base64EncodedDataPromise,
@@ -253,10 +253,16 @@ from a gitignored local environment file:
 > gitignored environment file.
 
 ```javascript
-import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
+import {
+  initializeAppCheck,
+  ReCaptchaEnterpriseProvider,
+} from "firebase/app-check";
 
 if (typeof self !== "undefined") {
-  if (typeof process !== "undefined" && process.env.NODE_ENV === "development") {
+  if (
+    typeof process !== "undefined" &&
+    process.env.NODE_ENV === "development"
+  ) {
     // ✅ SAFE: Load dynamically from Next.js environment variable; fallback to true to auto-generate
     self.FIREBASE_APPCHECK_DEBUG_TOKEN =
       process.env.NEXT_PUBLIC_APP_CHECK_DEBUG_TOKEN || true;

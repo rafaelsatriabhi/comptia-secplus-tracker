@@ -48,7 +48,7 @@ const firebaseConfig = {
   storageBucket: "PROJECT_ID.firebasestorage.app",
   messagingSenderId: "SENDER_ID",
   appId: "APP_ID",
-  measurementId: "G-MEASUREMENT_ID"
+  measurementId: "G-MEASUREMENT_ID",
 };
 
 // Initialize Firebase
@@ -108,10 +108,16 @@ To persist a stable debug token across browser resets without leaking secrets:
 1. Configure your code before initializing App Check:
 
    ```javascript
-   import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
+   import {
+     initializeAppCheck,
+     ReCaptchaEnterpriseProvider,
+   } from "firebase/app-check";
 
    if (typeof self !== "undefined") {
-     if (typeof process !== "undefined" && process.env.NODE_ENV === "development") {
+     if (
+       typeof process !== "undefined" &&
+       process.env.NODE_ENV === "development"
+     ) {
        // ✅ SAFE: Load dynamically from Next.js environment variable; fallback to true to auto-generate
        self.FIREBASE_APPCHECK_DEBUG_TOKEN =
          process.env.NEXT_PUBLIC_APP_CHECK_DEBUG_TOKEN || true;
