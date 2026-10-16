@@ -427,6 +427,124 @@
       #pz .chip.on {
         background: var(--ac);
       }
+      .dd {
+        margin: 8px 0;
+      }
+      .dd summary {
+        list-style: none;
+        margin: 0;
+      }
+      .dd summary::-webkit-details-marker {
+        display: none;
+      }
+      .dd summary b {
+        transition: 0.25s;
+      }
+      .dd[open] summary b {
+        transform: rotate(180deg);
+      }
+      .dd summary.on .bx {
+        background: linear-gradient(135deg, var(--ac), var(--ac2));
+        border-color: transparent;
+        color: #fff;
+      }
+      .lc {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 7px 10px;
+        margin: 4px 0 4px 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .lc:hover {
+        background: var(--bg);
+      }
+      .lc input {
+        display: none;
+      }
+      .lc .bx {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+      }
+      .lc.on span:last-child {
+        color: var(--mut);
+        text-decoration: line-through;
+      }
+      .og {
+        margin: 6px 0;
+      }
+      .og summary {
+        cursor: pointer;
+        font-weight: 600;
+        padding: 4px 0;
+      }
+      .hd summary {
+        list-style: none;
+        cursor: pointer;
+      }
+      .hd summary::-webkit-details-marker {
+        display: none;
+      }
+      .hd summary span:first-child {
+        width: 190px;
+      }
+      .hb.sub {
+        margin-left: 16px;
+        font-size: 0.8rem;
+      }
+      .hb.sub span:first-child {
+        width: 200px;
+      }
+      .tw {
+        margin: 6px 0 12px;
+        padding: 8px;
+        border-radius: 12px;
+        background: rgba(255, 93, 122, 0.1);
+      }
+      .ar {
+        font-style: normal;
+        color: var(--mut);
+        transition: 0.25s;
+      }
+      .hd[open] > summary .ar {
+        transform: rotate(180deg);
+      }
+      .hd {
+        margin: 6px 0;
+      }
+      .hd > summary {
+        padding: 6px 10px;
+        border: 1px solid var(--ln);
+        border-radius: 10px;
+      }
+      .hd > summary:hover {
+        border-color: var(--ac);
+      }
+      .lg {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 8px 14px;
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid var(--ln);
+      }
+      .lgi {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+        font-size: 0.85rem;
+      }
+      .lgi i {
+        flex: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 6px;
+        margin-top: 2px;
+        border: 2px solid transparent;
+      }
     </style>
   </head>
   <body>
@@ -456,6 +574,7 @@
         <h2>🗺️ Journey Map</h2>
         <small>Tap any day. Colors follow milestones.</small>
         <div id="map" class="map"></div>
+        <div id="lg" class="lg"></div>
       </section>
       <section class="card">
         <h2>🏅 Milestones</h2>
@@ -469,7 +588,12 @@
             ><svg id="ch" viewBox="0 0 400 150" width="100%"></svg>
           </div>
           <div>
-            <b>Weak-domain heatmap</b>
+            <div
+              class="row"
+              style="justify-content: space-between; align-items: center"
+            >
+              <b>Weak-domain heatmap</b><button id="ta">⏬ Expand all</button>
+            </div>
             <div id="hm"></div>
           </div>
         </div>
@@ -549,6 +673,21 @@
           <div style="margin-top: 8px">
             <label>Exam date <input id="ed" type="date" /></label>
           </div>
+          <div style="margin-top: 14px">
+            <b>☁️ Cloud sync</b><br /><small
+              >Use the same code on every device.</small
+            ><input
+              id="sy"
+              class="rw"
+              placeholder="Sync code (8+ letters/numbers)"
+              autocomplete="off"
+            />
+            <div class="row" style="justify-content: flex-start; margin: 6px 0">
+              <button id="sn">New code</button
+              ><button id="sk" class="pri">Connect</button>
+            </div>
+            <small id="ss">Not connected</small>
+          </div>
           <p id="sch"></p>
           <div class="row">
             <button id="th">🌓 Theme</button><button id="bk">Backup code</button
@@ -563,7 +702,6 @@
         </section>
       </div>
     </div>
-
     <script>
       const $ = (s) => document.querySelector(s),
         esc = (s) =>
@@ -669,6 +807,37 @@
         "Security Operations",
         "Program Mgmt & Oversight",
       ];
+      const L = [
+        "",
+        "Welcome to the Course!|Course Downloads & Free Resources|Exam Tips",
+        "Fundamentals of Security|Threats and Vulnerabilities|Confidentiality|Integrity|Availability|Non-repudiation|Authentication|Authorization|Accounting|Security Control Categories|Security Control Types|Zero Trust|Gap Analysis",
+        "Threat Actors|Threat Actor Motivations|Threat Actor Attributes|Unskilled Attackers|Hacktivists|Organized Crime|Nation-state Actor|Insider Threats|Shadow IT|Threat Vectors and Attack Surfaces|Outsmarting Threat Actors",
+        "Physical Security|Fencing and Bollards|Attacking with Brute Force|Surveillance Systems|Bypassing Surveillance Systems|Access Control Vestibules|Door Locks|Access Badge Cloning",
+        "Social Engineering|Motivational Triggers|Impersonation|Pretexting|Phishing Attacks|Preventing Phishing Attacks|Conducting an Anti-Phishing Campaign|Frauds and Scams|Influence Campaigns|Other Social Engineering Attacks",
+        "Malware|Viruses|Worms|Trojans|Viruses and Trojans|Ransomware|Zombies and Botnets|Rootkits|Backdoors and Logic Bombs|Keylogger|Spyware and Bloatware|Malware Attack Techniques|Indications of Malware Attacks",
+        "Data Protection|Data Classifications|Data Ownership|Data States|Data Types|Data Sovereignty|Securing Data|Data Loss Prevention (DLP)|Configuring a DLP",
+        "Cryptographic Solutions|Symmetric vs Asymmetric|Symmetric Algorithms|Asymmetric Algorithms|Hashing|Increasing Hash Security|Public Key Infrastructure (PKI)|Digital Certificates|Exploring Digital Certificates|Blockchain|Encryption Tools|Obfuscation|Cryptographic Attacks",
+        "Risk Management|Risk Assessment Frequency|Risk Identification|Risk Register|Qualitative Risk Analysis|Quantitative Risk Analysis|Risk Management Strategies|Risk Monitoring and Reporting",
+        "Third-party Vendor Risks|Supply Chain Risks|Supply Chain Attacks|Vendor Assessment|Vendor Selection and Monitoring|Contracts and Agreements",
+        "Governance and Compliance|Governance|Governance Structures|Policies|Standards|Procedures|Governance Considerations|Compliance|Non-compliance Consequences",
+        "Asset and Change Management|Acquisition and Procurement|Mobile Asset Deployments|Asset Management|Asset Disposal and Decommissioning|Change Management|Change Management Processes|Technical Implications of Changes|Documenting Changes",
+        "Audits and Assessments|Internal Audits and Assessments|Performing an Internal Assessment|External Audits and Assessments|Performing an External Assessment|Penetration Testing|Reconnaissance in Pentesting|Performing a Basic PenTest|Attestation of Findings",
+        "Cyber Resilience and Redundancy|High Availability|Data Redundancy|Configuring a RAID|Capacity Planning|Powering Data Centers|Data Backups|Continuity of Operations Plan|Redundant Site Considerations|Resilience and Recovery Testing",
+        "Security Architecture|On-premise versus the Cloud|Cloud Security|Virtualization and Containerization|Serverless|Microservices|Network Infrastructure|Software-Defined Network (SDN)|Infrastructure as Code (IaC)|Centralized vs Decentralized Architectures|Internet of Things (IoT)|ICS and SCADA|Embedded Systems",
+        "Security Infrastructure|Ports and Protocols|Firewalls|Configuring Firewalls|IDS and IPS|Network Appliances|Port Security|Securing Network Communications|SD-WAN and SASE|Infrastructure Considerations|Selecting Infrastructure Controls",
+        "Identity and Access Management (IAM) Solutions|Identity and Access Management (IAM)|Multifactor Authentication|Password Security|Password Attacks|Single Sign-On (SSO)|Federation|Privileged Access Management (PAM)|Access Control Models|Assigning Permissions",
+        "Vulnerabilities and Attacks|Hardware Vulnerabilities|Bluetooth Vulnerabilities and Attacks|Mobile Vulnerabilities and Attacks|Zero-day Vulnerabilities|Operating System Vulnerabilities|SQL and XML Injections|Conducting an SQL Injection|XSS and XSRF|Buffer Overflow|Race Conditions",
+        "Malicious Activity|Distributed Denial of Service|DNS Attacks|Directory Traversal Attack|Execution and Escalation Attack|Replay Attacks|Session Hijacking|On-Path Attacks|Injection Attacks|Indicators of Compromise (IoC)",
+        "Hardening|Changing Default Configurations|Restricting Applications|Unnecessary Services|Trusted Operating Systems|Updates and Patches|Patch Management|Group Policies|SELinux|Data Encryption Levels|Secure Baselines",
+        "Security Techniques|Wireless Infrastructure Security|Wireless Security Settings|Application Security|Network Access Control (NAC)|Web and DNS Filtering|Email Security|Endpoint Detection and Response|User Behavior Analytics|Selecting Secure Protocols",
+        "Vulnerability Management|Identifying Vulnerabilities|Threat Intelligence Feeds|Responsible Disclosure Programs|Analyzing Vulnerabilities|Conducting Vulnerability Scans|Assessing Vulnerability Scan Results|Vulnerability Response and Remediation|Validating Vulnerability Remediation|Vulnerability Reporting",
+        "Alerting and Monitoring|Monitoring Resources|Alerting and Monitoring Activities|SNMP|SIEM|SCAP|Data from Security Tools and Protocols|NetFlow and Flow Analysis|Single Pane of Glass",
+        "Incident Response|Incident Response Process|Threat Hunting|Root Cause Analysis|IR Training and Testing|Digital Forensic Procedures|Data Collection Procedures|Disk Imaging and Analysis",
+        "Investigating an Incident|Investigating with Data|Dashboards|Automated Reports|Vulnerability Scans|Packet Captures|Firewall Logs|Application Logs|Endpoint Logs|OS-specific Security Logs|IPS/IDS Logs|Network Logs|Metadata",
+        "Automation and Orchestration|When to Automate and Orchestrate|Benefits of Automation and Orchestration|Automating Support Tickets|Automating Onboarding|Automating Security|Automating Application Development|Integrations and APIs",
+        "Security Awareness|Recognizing Insider Threats|Password Management|Avoiding Social Engineering|Policy and Handbooks|Remote and Hybrid Work Environments|Creating a Culture of Security",
+        "Access Your Readiness Assessment",
+      ];
       const D = [];
       W.forEach((p, i) => {
         const t = p
@@ -677,6 +846,12 @@
         D.push({
           t,
           k: "w",
+          wi: i ? 0 : 1,
+          lec: p.map(([s, r]) => {
+            const a = r ? +r.match(/\d+/)[0] : 1,
+              b = r && a == 1 ? +r.match(/\d+/g)[1] : 99;
+            return [s, a, b];
+          }),
           tasks: [
             ...(i ? [] : ["Download the course PDFs"]),
             "Watch " + t,
@@ -717,8 +892,6 @@
             "Log score & weak domains below",
           ],
         });
-
-      // State Management
       let ST = {
         done: {},
         notes: {},
@@ -732,32 +905,21 @@
       try {
         Object.assign(ST, JSON.parse(localStorage.getItem("sp60") || "{}"));
       } catch (e) {}
-
-      // WIRED: Save to localStorage AND push to Firebase
       const save = () => {
+        ST.u = Date.now();
         try {
           localStorage.setItem("sp60", JSON.stringify(ST));
         } catch (e) {}
-        if (window.syncToFirebase) window.syncToFirebase(ST);
+        cloud();
       };
-
-      // WIRED: Listen for incoming data from Firebase and update UI
-      window.loadFromFirebase = (data) => {
-        ST = data;
-        try {
-          localStorage.setItem("sp60", JSON.stringify(ST));
-        } catch (e) {}
-        if (ST.theme) document.documentElement.dataset.theme = ST.theme;
-        all();
-      };
-
       const fmt = (d) =>
         d.getFullYear() +
         "-" +
         String(d.getMonth() + 1).padStart(2, "0") +
         "-" +
         String(d.getDate()).padStart(2, "0");
-      const chk = (i, j) => !!(ST.done[i] && ST.done[i][j]),
+      const chk = (i, j) =>
+          D[i].lec && j == D[i].wi ? lAll(i) : !!(ST.done[i] && ST.done[i][j]),
         dn = (i) => D[i].tasks.every((_, j) => chk(i, j)),
         mi = (i) => M.findIndex((m) => i + 1 <= m[3]);
       const mdays = (k) =>
@@ -771,6 +933,117 @@
         d.setDate(d.getDate() - 59);
         return fmt(d);
       };
+      const OBJ =
+          "1.1 Security controls|1.2 Fundamental security concepts|1.3 Change management|1.4 Cryptographic solutions|2.1 Threat actors & motivations|2.2 Threat vectors & attack surfaces|2.3 Vulnerability types|2.4 Malicious activity indicators|2.5 Mitigation techniques|3.1 Architecture models|3.2 Infrastructure security|3.3 Data protection|3.4 Resilience & recovery|4.1 Secure baselines & hardening|4.2 Asset management|4.3 Vulnerability management|4.4 Alerting & monitoring|4.5 Security capabilities|4.6 Identity & access management|4.7 Automation & orchestration|4.8 Incident response|4.9 Investigation data sources|5.1 Governance|5.2 Risk management|5.3 Third-party risk|5.4 Compliance|5.5 Audits & assessments|5.6 Security awareness"
+            .split("|")
+            .map((s) => [s.slice(0, 3), s.slice(4)]),
+        HO = {};
+      function tog(o) {
+        const v = ST.sc[cur] || { s: "", w: [] };
+        v.o = v.o || [];
+        v.o = v.o.includes(o) ? v.o.filter((x) => x != o) : [...v.o, o];
+        v.w = [...new Set(v.o.map((x) => +x[0] - 1))];
+        ST.sc[cur] = v;
+        const b = document.querySelector(`[data-o='${o}']`);
+        if (b) b.classList.toggle("on");
+        save();
+        exams();
+      }
+      function tl() {
+        $("#ta").textContent = DOM.every((_, k) => HO[k])
+          ? "⏫ Collapse all"
+          : "⏬ Expand all";
+      }
+      $("#ta").onclick = () => {
+        const o = !DOM.every((_, k) => HO[k]);
+        DOM.forEach((_, k) => (HO[k] = o));
+        exams();
+      };
+      $("#hm").addEventListener(
+        "toggle",
+        (e) => {
+          if (e.target.dataset && e.target.dataset.k != null)
+            HO[e.target.dataset.k] = e.target.open;
+          tl();
+        },
+        true,
+      );
+      const LL = L.map((x, s) =>
+          x ? x.split("|").concat(s < 28 ? ["Checkpoint quiz"] : []) : [],
+        ),
+        LK = (k) => (ST.lec || {})[k],
+        OP = {};
+      const lecs = (i) =>
+          (D[i].lec || []).flatMap(([s, a, b]) =>
+            LL[s]
+              .map((n, k) => [s + ":" + (k + 1), n, k + 1])
+              .filter((x) => x[2] >= a && x[2] <= b),
+          ),
+        lAll = (i) => lecs(i).every(([k]) => LK(k));
+      D.forEach((d, i) => {
+        if (d.lec) {
+          const q = lecs(i),
+            n = d.tasks.length;
+          d.tasks.splice(
+            n - 3,
+            3,
+            "Highlight terms in the study guide; put ? next to anything unclear",
+            "Create flashcards for key terms in: " +
+              q
+                .slice(0, 3)
+                .map((x) => x[1])
+                .join(", ") +
+              (q.length > 3 ? "..." : ""),
+            "Self-test: explain each lecture topic in one sentence",
+            "Review flashcards from the previous day",
+          );
+        }
+      });
+      function lecUI(t) {
+        const q = lecs(cur),
+          n = q.filter(([k]) => LK(k)).length,
+          a = n == q.length;
+        return (
+          `<details class='dd' data-d='${cur}' ${OP[cur] === false ? "" : "open"}><summary class='task ${a ? "on" : ""}'><span class='bx'>${a ? "✓" : ""}</span><span style='flex:1'>${t}<br><small>${n}/${q.length} lectures</small></span><b>▾</b></summary>` +
+          q
+            .map(
+              ([k, nm]) =>
+                `<label class='lc ${LK(k) ? "on" : ""}'><input type='checkbox' data-l='${k}' ${LK(k) ? "checked" : ""}><span class='bx'></span><span>${nm}</span></label>`,
+            )
+            .join("") +
+          `<div class='row' style='justify-content:flex-start;margin:6px 0 0 18px'><button data-all='1'>Check all</button><button data-all='0'>Clear</button></div></details>`
+        );
+      }
+      function bulk(on) {
+        const q = lecs(cur);
+        ST.lec = ST.lec || {};
+        if (on) {
+          const u = q.filter(([k]) => !ST.lec[k]);
+          if (!u.length) return;
+          u.slice(0, -1).forEach(([k]) => (ST.lec[k] = 1));
+          $("#panel").onchange({
+            target: {
+              type: "checkbox",
+              dataset: { l: u[u.length - 1][0] },
+              checked: true,
+              getBoundingClientRect: () => ({ left: 0, top: 0 }),
+            },
+          });
+        } else {
+          q.forEach(([k]) => delete ST.lec[k]);
+          delete ST.when[cur];
+          save();
+          all();
+        }
+      }
+      $("#panel").addEventListener(
+        "toggle",
+        (e) => {
+          if (e.target.dataset && e.target.dataset.d != null)
+            OP[e.target.dataset.d] = e.target.open;
+        },
+        true,
+      );
       let cur = D.findIndex((_, i) => !dn(i));
       if (cur < 0) cur = 59;
       if (ST.theme) document.documentElement.dataset.theme = ST.theme;
@@ -848,6 +1121,10 @@
           tot += d.tasks.length;
           d.tasks.forEach((_, j) => chk(i, j) && ck++);
           dn(i) && dd++;
+          if (d.lec && !lAll(i)) {
+            const q = lecs(i);
+            ck += q.filter(([k]) => LK(k)).length / q.length;
+          }
         });
         const p = Math.round((ck / tot) * 100);
         $("#rg").style.strokeDashoffset = 327 * (1 - ck / tot);
@@ -868,7 +1145,14 @@
               ? "⏳ Starts in " + (1 - ex) + " day(s)"
               : df >= 0
                 ? `✅ ${df ? df + " day(s) ahead of" : "On"} schedule`
-                : `⚠️ ${-df} day(s) behind. Adjust, don't panic.`;
+                : `⚠️ Finish ${
+                    D[
+                      Math.max(
+                        0,
+                        D.findIndex((_, i) => !dn(i)),
+                      )
+                    ].t
+                  } today${df < -1 ? " (" + -df + " days behind)" : ""}`;
         }
         if (ST.fin) {
           const ld = (s) =>
@@ -878,6 +1162,20 @@
             });
           sch +=
             (sch ? " · " : "") + "📅 Plan: " + ld(SD()) + " → " + ld(ST.fin);
+        }
+        if (0) {
+          const w =
+            Math.round(
+              (new Date(ST.fin + "T00:00") - new Date(ST.start + "T00:00")) /
+                864e5,
+            ) + 1;
+          sch +=
+            (sch ? " · " : "") +
+            (w <= 0
+              ? "⚠️ Finish date is before start date"
+              : w >= 60
+                ? "📅 " + w + "-day window"
+                : "⚠️ Only " + w + " days for the 60-day plan");
         }
         $("#sch").textContent = sch;
         $("#st").innerHTML =
@@ -904,20 +1202,36 @@
         $("#panel").innerHTML =
           `<div class="ph"><button id="pv">‹</button><div><small>Day ${cur + 1} of 60${SD() ? " · " + ((d) => (d.setDate(d.getDate() + cur), d))(new Date(SD() + "T00:00")).toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" }) : ""} · ${m[0]} ${m[1]}</small><h2>${d.t}</h2></div><button id="nx">›</button></div><div class="bar"><i style="width:${(c / d.tasks.length) * 100}%"></i></div>` +
           d.tasks
-            .map(
-              (t, j) =>
-                `<label class="task ${chk(cur, j) ? "on" : ""}"><input type="checkbox" data-j="${j}" ${chk(cur, j) ? "checked" : ""}><span class="bx"></span><span>${t}</span></label>`,
+            .map((t, j) =>
+              d.lec && j == d.wi
+                ? lecUI(t)
+                : `<label class="task ${chk(cur, j) ? "on" : ""}"><input type="checkbox" data-j="${j}" ${chk(cur, j) ? "checked" : ""}><span class="bx"></span><span>${t}</span></label>`,
             )
             .join("") +
           (d.k == "e"
-            ? `<div class="sc"><label>Score (% or out of 900) <input id="scv" type="number" min="0" max="900" value="${sc.s}"></label><div class="ch">${DOM.map((n, k) => `<button class="chip ${sc.w.includes(k) ? "on" : ""}" data-d="${k}">D${k + 1}${n}</button>`).join("")}</div><small>Tap the domains where you missed questions.</small></div>`
+            ? `<div class="sc"><label>Score (% or out of 900) <input id="scv" type="number" min="0" max="900" value="${sc.s}"></label><h3 style='margin:14px 0 0'>🎯 Topics to Improve</h3><small>Open a domain and tap each objective where you missed questions.</small>${DOM.map(
+                (n, k) =>
+                  `<details class='og' ${(sc.o || []).some((x) => +x[0] == k + 1) ? "open" : ""}><summary>D${k + 1} ${n}</summary><div class='ch'>${OBJ.filter(
+                    (x) => +x[0][0] == k + 1,
+                  )
+                    .map(
+                      (x) =>
+                        `<button class='chip ${(sc.o || []).includes(x[0]) ? "on" : ""}' data-o='${x[0]}'>${x[0]} ${x[1]}</button>`,
+                    )
+                    .join("")}</div></details>`,
+              ).join("")}</div>`
             : "") +
           `<textarea id="nt" placeholder="Notes / brain dump for this day...">${esc(ST.notes[cur] || "")}</textarea>`;
       }
       function map() {
         $("#map").innerHTML = D.map((d, i) => {
           const c = d.tasks.filter((_, j) => chk(i, j)).length,
-            s = c == d.tasks.length ? "done" : c ? "part" : "";
+            s =
+              c == d.tasks.length
+                ? "done"
+                : c || (d.lec && lecs(i).some(([k]) => LK(k)))
+                  ? "part"
+                  : "";
           return `<button class="nd ${s} ${i == cur ? "cur" : ""}" style="--h:${mi(i) * 55}" data-i="${i}" title="${esc(d.t)}">${s == "done" ? "✓" : i + 1}</button>`;
         }).join("");
       }
@@ -950,18 +1264,47 @@
         $("#ex").textContent = pts.length
           ? `${pts.length} logged · best ${Math.round(Math.max(...pts.map((p) => p[1])))}% · latest ${Math.round(pts[pts.length - 1][1])}%`
           : "No scores yet";
+        const oc = {};
+        Object.values(ST.sc).forEach((v) =>
+          (v.o || []).forEach((o) => (oc[o] = (oc[o] || 0) + 1)),
+        );
         const cn = DOM.map(
             (_, k) =>
               Object.values(ST.sc).filter((v) => (v.w || []).includes(k))
                 .length,
           ),
-          mx = Math.max(1, ...cn);
-        $("#hm").innerHTML = DOM.map(
-          (n, k) =>
-            `<div class="hb"><span>D${k + 1} ${n}</span><i style="width:${(cn[k] / mx) * 50}%"></i><b>${cn[k]}</b></div>`,
+          mx = Math.max(1, ...cn),
+          om = Math.max(1, ...Object.values(oc)),
+          top = OBJ.filter((x) => oc[x[0]])
+            .sort((a, b) => oc[b[0]] - oc[a[0]])
+            .slice(0, 5);
+        $("#hm").innerHTML =
+          (top.length
+            ? `<div class='tw'><small>🔥 Current weak topics</small>${top.map((x) => `<div class='hb'><span><b>D${x[0][0]}</b> · ${x[0]} ${x[1]}</span><i style='width:${(oc[x[0]] / om) * 40}%'></i><b>${oc[x[0]]}</b></div>`).join("")}</div>`
+            : "<small>Log missed objectives on exam days to see your weak topics.</small>") +
+          DOM.map(
+            (n, k) =>
+              `<details class='hd' data-k='${k}' ${HO[k] ? "open" : ""}><summary class='hb'><span>D${k + 1} ${n}</span><i style='width:${(cn[k] / mx) * 40}%'></i><b>${cn[k]}</b><em class='ar'>▾</em></summary>` +
+              OBJ.filter((x) => +x[0][0] == k + 1)
+                .sort((a, b) => (oc[b[0]] || 0) - (oc[a[0]] || 0))
+                .map(
+                  (x) =>
+                    `<div class='hb sub'><span>${x[0]} ${x[1]}</span><i style='width:${((oc[x[0]] || 0) / om) * 40}%'></i><b>${oc[x[0]] || 0}</b></div>`,
+                )
+                .join("") +
+              `</details>`,
+          ).join("");
+        tl();
+      }
+      function lgd() {
+        const h = (k) => "hsl(" + k * 55 + ",70%,55%)";
+        $("#lg").innerHTML = M.map(
+          (m, k) =>
+            `<div class='lgi'><i style='background:${h(k)}'></i><span>${m[0]} <b>${m[1]}</b> · Days ${m[2]}–${m[3]}<br><small>${m[4]}</small></span></div>`,
         ).join("");
       }
       const all = () => {
+        lgd();
         $("#sdt").value = SD();
         $("#fd").value = ST.fin || "";
         hero();
@@ -975,7 +1318,11 @@
         if (t.type != "checkbox") return;
         const j = +t.dataset.j,
           was = dn(cur);
-        (ST.done[cur] = ST.done[cur] || [])[j] = t.checked;
+        if (t.dataset.l) {
+          ST.lec = ST.lec || {};
+          if (t.checked) ST.lec[t.dataset.l] = 1;
+          else delete ST.lec[t.dataset.l];
+        } else (ST.done[cur] = ST.done[cur] || [])[j] = t.checked;
         if (!SD()) {
           ST.start = fmt(new Date());
           ST.fin = ad(ST.start, 59);
@@ -1008,12 +1355,17 @@
       $("#panel").oninput = (e) => {
         if (e.target.id == "nt") ST.notes[cur] = e.target.value;
         if (e.target.id == "scv") {
-          ST.sc[cur] = { s: e.target.value, w: (ST.sc[cur] || {}).w || [] };
+          ST.sc[cur] = { ...(ST.sc[cur] || { w: [] }), s: e.target.value };
           exams();
         }
         save();
       };
       $("#panel").onclick = (e) => {
+        const oc = e.target.closest("[data-o]");
+        if (oc) {
+          tog(oc.dataset.o);
+          return;
+        }
         const c = e.target.closest(".chip"),
           b = e.target.closest("button");
         if (c) {
@@ -1024,6 +1376,8 @@
           save();
           panel();
           exams();
+        } else if (b && b.dataset.all != null) {
+          bulk(b.dataset.all == "1");
         } else if (b && b.id == "pv") {
           cur = Math.max(0, cur - 1);
           panel();
@@ -1362,42 +1716,149 @@
         $("#ts").textContent = "Start";
       };
       setMin(25);
-      all();
-    </script>
-
-    <!-- Firebase App (Core) -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-      import {
-        getDatabase,
-        ref,
-        set,
-        onValue,
-      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-      const firebaseConfig = {
-        databaseURL:
-          "https://comptia-secplus-tracker-default-rtdb.asia-southeast1.firebasedatabase.app/",
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const db = getDatabase(app);
-      const trackerRef = ref(db, "tracker/progress");
-
-      // Send data to Firebase whenever the app saves
-      window.syncToFirebase = function (dataObject) {
-        set(trackerRef, dataObject).catch((error) => {
-          console.error("Error saving data: ", error);
+      const FB =
+        "https://comptia-secplus-tracker-default-rtdb.asia-southeast1.firebasedatabase.app/trackers/";
+      let SC = "",
+        ES = null,
+        pt = 0;
+      try {
+        SC = localStorage.getItem("sp60sync") || "";
+      } catch (e) {}
+      const ss = (m, c) => {
+          const e = $("#ss");
+          e.textContent = m;
+          e.style.color = c || "var(--mut)";
+        },
+        url = () => FB + SC + ".json";
+      function cloud() {
+        if (!SC) return;
+        clearTimeout(pt);
+        ss("⏳ Syncing...");
+        pt = setTimeout(push, 700);
+      }
+      function push() {
+        const b = { ...ST };
+        delete b.theme;
+        return fetch(url(), { method: "PUT", body: JSON.stringify(b) })
+          .then((r) => {
+            if (!r.ok) throw 0;
+            ss("☁️ Synced " + new Date().toLocaleTimeString(), "#00c2a8");
+          })
+          .catch(() =>
+            ss("⚠️ Offline or blocked. Saved on this device only.", "#ff5d7a"),
+          );
+      }
+      function apply(d) {
+        const th = ST.theme;
+        ST = Object.assign(
+          {
+            done: {},
+            notes: {},
+            sc: {},
+            when: {},
+            lec: {},
+            rw: {},
+            exam: "",
+            start: "",
+            fin: "",
+            theme: th,
+          },
+          d,
+        );
+        try {
+          localStorage.setItem("sp60", JSON.stringify(ST));
+        } catch (e) {}
+        cur = Math.max(
+          0,
+          D.findIndex((_, i) => !dn(i)),
+        );
+        all();
+      }
+      function stream() {
+        if (ES) ES.close();
+        if (!SC) return;
+        ES = new EventSource(url());
+        ES.addEventListener("put", (e) => {
+          let m;
+          try {
+            m = JSON.parse(e.data);
+          } catch (x) {
+            return;
+          }
+          if (m.path !== "/") return;
+          const d = m.data;
+          if (!d) {
+            push();
+            return;
+          }
+          const r = d.u || 0,
+            l = ST.u || 0;
+          if (r > l) {
+            apply(d);
+            ss("☁️ Updated from another device", "#00c2a8");
+          } else if (r < l) push();
+          else ss("☁️ Synced", "#00c2a8");
         });
-      };
-
-      // Listen for changes from Firebase (e.g. from your phone)
-      onValue(trackerRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data && window.loadFromFirebase) {
-          window.loadFromFirebase(data);
+        ES.onerror = () => ss("⚠️ Connection lost. Reconnecting...", "#ff5d7a");
+      }
+      async function connect(code, ask) {
+        code = (code || "").trim();
+        if (!/^[A-Za-z0-9_-]{8,64}$/.test(code)) {
+          ss("⚠️ Use 8+ letters or numbers", "#ff5d7a");
+          return;
         }
-      });
+        SC = code;
+        try {
+          localStorage.setItem("sp60sync", SC);
+        } catch (e) {}
+        ss("⏳ Connecting...");
+        try {
+          const r = await fetch(url());
+          if (!r.ok) throw 0;
+          const d = await r.json(),
+            mine =
+              Object.keys(ST.done).length +
+                Object.keys(ST.sc).length +
+                Object.keys(ST.lec || {}).length >
+              0;
+          if (!d) {
+            ST.u = ST.u || Date.now();
+            await push();
+          } else if (!mine) apply(d);
+          else if ((d.u || 0) !== (ST.u || 0)) {
+            if (
+              ask
+                ? confirm(
+                    "Cloud progress found. OK = load cloud progress here. Cancel = overwrite the cloud with this device.",
+                  )
+                : (d.u || 0) > (ST.u || 0)
+            )
+              apply(d);
+            else {
+              if (ask) ST.u = Date.now();
+              await push();
+            }
+          } else ss("☁️ Synced", "#00c2a8");
+          stream();
+        } catch (e) {
+          ss(
+            "⚠️ Cannot reach Firebase. Sync works on your GitHub Pages site.",
+            "#ff5d7a",
+          );
+        }
+      }
+      $("#sy").value = SC;
+      $("#sk").onclick = () => connect($("#sy").value, 1);
+      $("#sn").onclick = () => {
+        const a = new Uint8Array(12);
+        crypto.getRandomValues(a);
+        $("#sy").value = [...a]
+          .map((x) => x.toString(36).padStart(2, "0"))
+          .join("");
+        connect($("#sy").value, 1);
+      };
+      all();
+      if (SC) connect(SC, 0);
     </script>
   </body>
 </html>
