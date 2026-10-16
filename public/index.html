@@ -135,38 +135,4 @@ let lt=0,NB=null;function tick(m){if(!SO)return;const n=performance.now();if(n-l
 $('#sd').onclick=()=>{SO=!SO;$('#sd').textContent=SO?'🔔 Sound on':'🔕 Sound off';beep()};
 $('#tr').onclick=()=>{clearInterval(ti);ti=0;setMin(fm);$('#ts').textContent='Start'};setMin(25);
 all();
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    databaseURL: "https://comptia-secplus-tracker-default-rtdb.asia-southeast1.firebasedatabase.app/"
-    // If needed, add apiKey, authDomain, etc. from your Project Settings
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  // Example: Saving data when a user triggers an action
-  window.saveTrackerData = function(dataObject) {
-    const trackerRef = ref(db, 'tracker/progress');
-    set(trackerRef, dataObject)
-      .then(() => {
-        console.log("Data saved successfully!");
-      })
-      .catch((error) => {
-        console.error("Error saving data: ", error);
-      });
-  };
-
-  // Example: Listening for real-time changes across devices
-  const trackerRef = ref(db, 'tracker/progress');
-  onValue(trackerRef, (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      console.log("Data updated from another device:", data);
-      // TODO: Call your app's UI render function here with the fetched `data`
-    }
-  });
 </script></body></html>
