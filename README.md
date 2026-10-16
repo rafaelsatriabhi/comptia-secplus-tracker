@@ -4,7 +4,7 @@
 
 A gamified study tracker for the **CompTIA Security+ (SY0-701)** exam. It turns the Dion Training 60-day study plan into a daily mission board that **celebrates every check**, shows exactly what to study next, and tells you which exam topics are still holding you back.
 
-No frameworks, no build step, no sign-up. Open it, tick a box, hear the *ding*, and watch the progress ring fill. ✨
+No frameworks, no build step, no sign-up. Open it, tick a box, hear the _ding_, and watch the progress ring fill. ✨
 
 **🔗 Live app:** `<add your live URL here>`
 
@@ -19,12 +19,14 @@ Studying for a certification is a marathon, and motivation is the first thing to
 ## ✨ Features
 
 ### 🗓️ A study plan you can actually follow
+
 - **60 days, 6 milestones:** 🧱 Foundations → 🧠 Core Concepts → 🚀 Advanced Topics → 🏁 Course Complete → 🎯 Practice Warrior → 🏆 Exam Ready
-- **Real topic names:** every day shows its course section, such as *"Section 7: Data Protection"*
+- **Real topic names:** every day shows its course section, such as _"Section 7: Data Protection"_
 - **Lecture-level dropdowns:** open a day and tick off each lecture, plus the section checkpoint quiz. The "Watch" task completes itself when every lecture is done
 - **Specific daily tasks:** notes, flashcards for that day's key terms, a self-test, and a review of yesterday's cards
 
 ### 🎮 Progress that feels good
+
 - **Animated progress ring** and a **60-day journey map** that fills with colour as you go
 - **Confetti** on every check, a bigger burst for each finished day and a full fanfare for each milestone
 - **Unlockable milestone badges** with a reward you set yourself (🍕 pizza, anyone?)
@@ -32,23 +34,27 @@ Studying for a certification is a marathon, and motivation is the first thing to
 - **Different sounds** for check, uncheck, day complete and milestone unlocked, plus an on/off switch
 
 ### 📅 Dates that adapt to you
+
 - Set a **start date** and the **finish date** fills itself in. Set the finish date and the start date follows. Either way, the plan is 60 days
 - Each day card shows its **real calendar date**
-- **Smart schedule messages:** *"Starts in 3 days"*, *"2 days ahead"*, or *"Finish Section 7: Data Protection today"*. Starting late is never counted as "behind"
+- **Smart schedule messages:** _"Starts in 3 days"_, _"2 days ahead"_, or _"Finish Section 7: Data Protection today"_. Starting late is never counted as "behind"
 - **Exam countdown** and a **days-to-finish** counter
 
 ### 📈 Practice exam tracker
+
 - Log each score as a **percentage or out of 900**, and see a trend line against the pass mark (about 83%, or 750/900)
 - Tap the **exam objectives you missed** (all 28, from 1.1 to 5.6), grouped by domain
 - A **weak-topics heatmap** ranks your most-missed objectives, tagged with their domain (D1 to D5), with expandable domain dropdowns and an **Expand all / Collapse all** button
 - A **notes box** on every day, which doubles as your brain dump
 
 ### ⏱️ Focus timer
+
 - A **circular dial** you can drag, scroll or arrow-key from **1 to 120 minutes**
 - A satisfying **analog "tick"** for every minute, with a heavier click every 5
 - Quick presets, an alarm when time is up and an automatic 5-minute break
 
 ### ☁️ Sync across devices
+
 - **Real-time sync** through Firebase Realtime Database. Tick a box on your laptop and it appears on your phone seconds later
 - Offline friendly: changes are saved locally and sync when you're back online
 - Light and dark mode, **backup code** export and restore, and a mobile-friendly layout
@@ -57,14 +63,14 @@ Studying for a certification is a marathon, and motivation is the first thing to
 
 ## 🗺️ The 60-day roadmap
 
-| Milestone | Days | What you do |
-|---|---|---|
-| 🧱 **Foundations** | 1–10 | Sections 1–9: security basics to risk management |
-| 🧠 **Core Concepts** | 11–20 | Sections 10–17: vendors, governance, architecture, IAM |
-| 🚀 **Advanced Topics** | 21–30 | Sections 18–26: attacks, hardening, incident response, automation |
-| 🏁 **Course Complete** | 31–33 | Security awareness, readiness assessment, one well-earned rest day |
-| 🎯 **Practice Warrior** | 34–46 | One practice exam every day |
-| 🏆 **Exam Ready** | 47–60 | Daily retakes until the answers are second nature |
+| Milestone               | Days  | What you do                                                        |
+| ----------------------- | ----- | ------------------------------------------------------------------ |
+| 🧱 **Foundations**      | 1–10  | Sections 1–9: security basics to risk management                   |
+| 🧠 **Core Concepts**    | 11–20 | Sections 10–17: vendors, governance, architecture, IAM             |
+| 🚀 **Advanced Topics**  | 21–30 | Sections 18–26: attacks, hardening, incident response, automation  |
+| 🏁 **Course Complete**  | 31–33 | Security awareness, readiness assessment, one well-earned rest day |
+| 🎯 **Practice Warrior** | 34–46 | One practice exam every day                                        |
+| 🏆 **Exam Ready**       | 47–60 | Daily retakes until the answers are second nature                  |
 
 ---
 
@@ -154,7 +160,7 @@ There are no accounts, no analytics and no tracking. Without cloud sync, your da
 ## 🙏 Credits and disclaimer
 
 - Study schedule adapted from the **Dion Training** CompTIA Security+ (SY0-701) 60-day study plan.
-- This is an independent, unofficial study aid. It is **not affiliated with or endorsed by CompTIA or Dion Training**. *CompTIA Security+* is a trademark of CompTIA, Inc.
+- This is an independent, unofficial study aid. It is **not affiliated with or endorsed by CompTIA or Dion Training**. _CompTIA Security+_ is a trademark of CompTIA, Inc.
 
 ---
 

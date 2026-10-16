@@ -481,7 +481,6 @@
         font-weight: 600;
         padding: 4px 0;
       }
-      
       .hd summary {
         list-style: none;
         cursor: pointer;
@@ -498,25 +497,6 @@
       }
       .hb.sub span:first-child {
         width: 200px;
-      }
-       .ft {
-        display: grid;
-        gap: 4px;
-        text-align: center;
-        padding: 18px 8px 28px;
-        color: var(--mut);
-        font-size: 0.85rem;
-        border-top: 1px solid var(--ln);
-      }
-      .ft a {
-        color: var(--ac);
-        text-decoration: none;
-      }
-      .ft a:hover {
-        text-decoration: underline;
-      }
-      .ft b {
-        color: var(--tx);
       }
       .tw {
         margin: 6px 0 12px;
@@ -542,6 +522,25 @@
       }
       .hd > summary:hover {
         border-color: var(--ac);
+      }
+      .ft {
+        display: grid;
+        gap: 4px;
+        text-align: center;
+        padding: 18px 8px 28px;
+        color: var(--mut);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--ln);
+      }
+      .ft a {
+        color: var(--ac);
+        text-decoration: none;
+      }
+      .ft a:hover {
+        text-decoration: underline;
+      }
+      .ft b {
+        color: var(--tx);
       }
       .lg {
         display: grid;
@@ -681,17 +680,38 @@
           <div>
             <label
               >Start date <small>(finish auto-set)</small>
-              <input id="sdt" type="date"
+              <input
+                id="sdt"
+                class="rw"
+                type="text"
+                inputmode="numeric"
+                placeholder="dd/mm/yyyy"
+                maxlength="10"
             /></label>
           </div>
           <div style="margin-top: 8px">
             <label
               >Finish date <small>(start auto-set)</small>
-              <input id="fd" type="date"
+              <input
+                id="fd"
+                class="rw"
+                type="text"
+                inputmode="numeric"
+                placeholder="dd/mm/yyyy"
+                maxlength="10"
             /></label>
           </div>
           <div style="margin-top: 8px">
-            <label>Exam date <input id="ed" type="date" /></label>
+            <label
+              >Exam date
+              <input
+                id="ed"
+                class="rw"
+                type="text"
+                inputmode="numeric"
+                placeholder="dd/mm/yyyy"
+                maxlength="10"
+            /></label>
           </div>
           <div style="margin-top: 14px">
             <b>☁️ Cloud sync</b><br /><small
@@ -721,7 +741,7 @@
           ><button id="rt" style="display: none">Restore</button>
         </section>
       </div>
-            <footer class="ft">
+      <footer class="ft">
         <div>© 2026 Rafael · Built by <b>rafaelsatriabhi</b></div>
         <div>
           <a
@@ -1206,11 +1226,7 @@
                   } today${df < -1 ? " (" + -df + " days behind)" : ""}`;
         }
         if (ST.fin) {
-          const ld = (s) =>
-            new Date(s + "T00:00").toLocaleDateString(undefined, {
-              day: "numeric",
-              month: "short",
-            });
+          const ld = (s) => new Date(s + "T00:00").toLocaleDateString("en-GB");
           sch +=
             (sch ? " · " : "") + "📅 Plan: " + ld(SD()) + " → " + ld(ST.fin);
         }
@@ -1251,7 +1267,7 @@
           c = d.tasks.filter((_, j) => chk(cur, j)).length,
           sc = ST.sc[cur] || { s: "", w: [] };
         $("#panel").innerHTML =
-          `<div class="ph"><button id="pv">‹</button><div><small>Day ${cur + 1} of 60${SD() ? " · " + ((d) => (d.setDate(d.getDate() + cur), d))(new Date(SD() + "T00:00")).toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" }) : ""} · ${m[0]} ${m[1]}</small><h2>${d.t}</h2></div><button id="nx">›</button></div><div class="bar"><i style="width:${(c / d.tasks.length) * 100}%"></i></div>` +
+          `<div class="ph"><button id="pv">‹</button><div><small>Day ${cur + 1} of 60${SD() ? " · " + ((d) => (d.setDate(d.getDate() + cur), d))(new Date(SD() + "T00:00")).toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" }) : ""} · ${m[0]} ${m[1]}</small><h2>${d.t}</h2></div><button id="nx">›</button></div><div class="bar"><i style="width:${(c / d.tasks.length) * 100}%"></i></div>` +
           d.tasks
             .map((t, j) =>
               d.lec && j == d.wi
@@ -1356,8 +1372,9 @@
       }
       const all = () => {
         lgd();
-        $("#sdt").value = SD();
-        $("#fd").value = ST.fin || "";
+        $("#sdt").value = i2d(SD());
+        $("#fd").value = i2d(ST.fin);
+        $("#ed").value = i2d(ST.exam);
         hero();
         panel();
         map();
@@ -1465,27 +1482,66 @@
           save();
         }
       };
-      $("#ed").value = ST.exam;
+      const d2i = (s) => {
+          const p = (s || "").trim().split("/");
+          if (p.length != 3 || p[2].length != 4) return "";
+          const [d, m, y] = p.map(Number),
+            t = new Date(y, m - 1, d);
+          return t.getFullYear() == y &&
+            t.getMonth() == m - 1 &&
+            t.getDate() == d
+            ? y +
+                "-" +
+                String(m).padStart(2, "0") +
+                "-" +
+                String(d).padStart(2, "0")
+            : "";
+        },
+        i2d = (s) => (s ? s.split("-").reverse().join("/") : "");
+      $("#ed").value = i2d(ST.exam);
       const ad = (s, n) => {
         if (!s) return "";
         const d = new Date(s + "T00:00");
         d.setDate(d.getDate() + n);
         return fmt(d);
       };
-      $("#sdt").onchange = (e) => {
-        ST.start = e.target.value;
-        ST.fin = ad(ST.start, 59);
+      const ch = (e, f) => {
+        const v = d2i(e.target.value);
+        if (e.target.value && !v) {
+          all();
+          return;
+        }
+        f(v);
         save();
         all();
       };
-      $("#fd").onchange = (e) => {
-        ST.fin = e.target.value;
-        ST.start = ad(ST.fin, -59);
-        save();
-        all();
-      };
+      $("#sdt").onchange = (e) =>
+        ch(e, (v) => {
+          ST.start = v;
+          ST.fin = ad(v, 59);
+        });
+      $("#fd").onchange = (e) =>
+        ch(e, (v) => {
+          ST.fin = v;
+          ST.start = ad(v, -59);
+        });
+      document.querySelectorAll("#sdt,#fd,#ed").forEach(
+        (x) =>
+          (x.oninput = (e) => {
+            let v = e.target.value.replace(/[^0-9]/g, "").slice(0, 8);
+            if (v.length > 4)
+              v = v.slice(0, 2) + "/" + v.slice(2, 4) + "/" + v.slice(4);
+            else if (v.length > 2) v = v.slice(0, 2) + "/" + v.slice(2);
+            e.target.value = v;
+          }),
+      );
       $("#ed").onchange = (e) => {
-        ST.exam = e.target.value;
+        const v = d2i(e.target.value);
+        if (e.target.value && !v) {
+          all();
+          return;
+        }
+        ST.exam = v;
         save();
         hero();
       };
